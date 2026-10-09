@@ -1,0 +1,55 @@
+stock_prices = {
+    "AAPL": 180,
+    "TSLA": 250,
+    "GOOGL": 140,
+    "MSFT": 420,
+    "AMZN": 180
+}
+
+portfolio = {}
+total_investment = 0
+
+print("===== STOCK PORTFOLIO TRACKER =====")
+print("Available stocks:", ", ".join(stock_prices.keys()))
+
+number_of_stocks = int(input("Enter number of stocks: "))
+
+for i in range(number_of_stocks):
+    stock = input("\nEnter stock name: ").upper()
+
+    if stock in stock_prices:
+        quantity = int(input("Enter quantity: "))
+
+        value = stock_prices[stock] * quantity
+        portfolio[stock] = quantity
+        total_investment += value
+
+        print("Investment value:", value)
+    else:
+        print("Stock not available.")
+
+print("\n===== PORTFOLIO SUMMARY =====")
+
+for stock, quantity in portfolio.items():
+    value = stock_prices[stock] * quantity
+    print(stock, "- Quantity:", quantity, "- Value:", value)
+
+print("\nTotal Investment Value:", total_investment)
+
+save = input("\nDo you want to save the result? (yes/no): ").lower()
+
+if save == "yes":
+    with open("portfolio.txt", "w") as file:
+        file.write("===== STOCK PORTFOLIO =====\n")
+
+        for stock, quantity in portfolio.items():
+            value = stock_prices[stock] * quantity
+            file.write(
+                f"{stock} - Quantity: {quantity} - Value: {value}\n"
+            )
+
+        file.write(f"\nTotal Investment Value: {total_investment}")
+
+    print("Portfolio saved to portfolio.txt")
+else:
+    print("Portfolio was not saved.")
